@@ -5,8 +5,8 @@ identity:
     en_US: "powermem"
     zh_Hans: "powermem"
   description:
-    en_US: "A Dify plugin for PowerMem."
-    zh_Hans: "A Dify plugin for PowerMem."
+    en_US: "A Dify plugin for PowerMem.Your AI-Powered Long-Term Memory — Accurate, Agile, Affordable."
+    zh_Hans: "PowerMem 的 Dify 插件。AI赋能的长期记忆 — 准确、快速、经济实惠。"
   icon: "ob.png"
 
 credentials_for_provider:
@@ -14,8 +14,8 @@ credentials_for_provider:
     type: select
     required: true
     label:
-      en_US: LLM Provider
-      zh_Hans: LLM 提供商
+      en_US: LLM Model Provider
+      zh_Hans: LLM 模型提供商
     options:
       - value: qwen
         label:
@@ -43,8 +43,8 @@ credentials_for_provider:
     type: select
     required: true
     label:
-      en_US: Embedding Provider
-      zh_Hans: 向量提供商
+      en_US: Embedding Model Provider
+      zh_Hans: 向量模型提供商
     options:
       - value: qwen
         label:
@@ -81,7 +81,7 @@ credentials_for_provider:
           en_US: oceanbase
           zh_Hans: oceanbase
     label:
-      en_US: DB Provider
+      en_US: DB Type
       zh_Hans: 数据库类型
     default: sqlite
   oceanbase_host:

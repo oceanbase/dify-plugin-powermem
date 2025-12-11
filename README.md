@@ -1,4 +1,4 @@
-## PowerMem [![PowerMem](https://img.shields.io/badge/PowerMem-blue)](https://github.com/oceanbase/powermem)
+## PowerMem [![PowerMem](https://img.shields.io/badge/PowerMem-blue)](https://www.powermem.ai/)
 
 **Author:** oceanbase  
 **Version:** 0.0.1  

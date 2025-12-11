@@ -93,7 +93,7 @@ def build_config(credentials: dict[str, Any]) -> dict[str, Any]:
         ob_host = credentials.get("oceanbase_host") or "127.0.0.1"
         ob_port = credentials.get("oceanbase_port") or 2881
         ob_user = credentials.get("oceanbase_user") or "root@sys"
-        ob_password = credentials.get("oceanbase_password") or "your_password"
+        ob_password = credentials.get("oceanbase_password", "")
         ob_db_name = credentials.get("oceanbase_database") or "powermem"
 
         oceanbase_config = {
