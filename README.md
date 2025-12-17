@@ -30,7 +30,7 @@
 ### Version History
 | Version | Date    | Changes        |
 |---------|---------|----------------|
-| v0.0.2  | 2024-12 | Enhanced workflow text output with ID and key fields, use PowerMem 0.2.0 SDK |
+| v0.0.2  | 2025-12-17 | Enhanced workflow text output with ID and key fields, use PowerMem 0.2.0 SDK |
 | v0.0.1  | Initial | First release  |
 
 ### Contributing
