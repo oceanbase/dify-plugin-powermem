@@ -1,7 +1,7 @@
 ## PowerMem [![PowerMem](https://img.shields.io/badge/PowerMem-blue)](https://www.powermem.ai/)
 
 **Author:** oceanbase  
-**Version:** 0.0.1  
+**Version:** 0.0.2  
 **Type:** tool  
 
 ### 简介
@@ -12,7 +12,7 @@
 ### 工具说明
 1. **add_memory**：新增或智能合并记忆；messages（字符串或 JSON 列表/字典）、user_id/agent_id/run_id、metadata(JSON 字符串)、infer（默认 true）。  
 2. **search_memories**：向量/混合检索记忆；query、user_id/agent_id/run_id、limit、threshold、filters(JSON 字符串)。  
-3. **update_memory**：按 memory_id（字符串传入、内部转 int）更新 content，可带 metadata。  
+3. **update_memory**：按 memory_id更新 content，可带 metadata。  
 4. **delete_all_memories**：按 user_id/agent_id/run_id 范围删除全部。  
 5. **list_memories**：列出记忆；filters(JSON 字符串)、limit/offset、user_id/agent_id/run_id。  
 
@@ -22,14 +22,15 @@
 
 ### 版本历史
 | 版本    | 日期    | 变更           |
-|---------|--------|----------------|
-| v0.0.1  | Initial| 首次发布        |
+|---------|---------|----------------|
+| v0.0.2  | 2024-12 | 优化工作流文本输出格式，增加ID等关键字段，使用PowerMem 0.2.0 SDK |
+| v0.0.1  | Initial | 首次发布        |
 
 ### 注意事项
 - infer infer=true 走智能模式，infer=false 走简单模式。  
-- OceanBase 仅在 db_provider=oceanbase 时生效；默认 sqlite。
+- OceanBase 仅在数据库类型为 oceanbase 时生效；默认 sqlite。
 - 使用 OceanBase 作为向量数据库的时候，需要确保数据库已经存在。
-- seekdb作为 OceanBase 的轻量版，可以选择 db_provider=oceanbase，填写seekdb的连接信息就可以将seekdb作为向量数据库。
+- seekdb作为 OceanBase 的轻量版，可以选择数据库类型为 oceanbase，填写seekdb的连接信息就可以将seekdb作为向量数据库。
 - 作用域 user_id/agent_id 会影响搜索/更新/删除范围，留空则不加作用域。  
 
 ### 贡献

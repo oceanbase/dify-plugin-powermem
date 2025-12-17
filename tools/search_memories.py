@@ -59,11 +59,22 @@ class SearchMemoriesTool(Tool):
             # text summary
             lines = [f"Query: {query}", f"Found: {len(results)}"]
             for idx, r in enumerate(results, 1):
-                lines.append(f"{idx}. {r.get('memory','')}")
-                if r.get("score") is not None:
-                    lines.append(f"   score: {r.get('score')}")
-                if r.get("metadata"):
-                    lines.append(f"   metadata: {r.get('metadata')}")
+                memory_id = r.get('id', '')
+                memory = r.get('memory', '')
+                user_id = r.get('user_id', '')
+                agent_id = r.get('agent_id', '')
+                run_id = r.get('run_id', '')
+                score = r.get('score')
+                
+                lines.append(f"{idx}. ID:{memory_id} {memory}")
+                if score is not None:
+                    lines.append(f"   score: {score}")
+                if user_id:
+                    lines.append(f"   user_id: {user_id}")
+                if agent_id:
+                    lines.append(f"   agent_id: {agent_id}")
+                if run_id:
+                    lines.append(f"   run_id: {run_id}")
             yield self.create_text_message("\n".join(lines))
         except Exception as exc:  # noqa: BLE001
             error = f"Failed to search memories: {exc}"

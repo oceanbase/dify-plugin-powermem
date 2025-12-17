@@ -1,7 +1,7 @@
 ## PowerMem [![PowerMem](https://img.shields.io/badge/PowerMem-blue)](https://www.powermem.ai/)
 
 **Author:** oceanbase  
-**Version:** 0.0.1  
+**Version:** 0.0.2  
 **Type:** tool  
 
 ### 概要
@@ -12,7 +12,7 @@
 ### ツール概要
 1. **add_memory**：新規またはインテリジェント統合。messages（文字列または JSON 配列/オブジェクト）、user_id/agent_id/run_id、metadata(JSON 文字列)、infer（デフォルト true）。  
 2. **search_memories**：ベクター／ハイブリッド検索。query、user_id/agent_id/run_id、limit、threshold、filters(JSON 文字列)。  
-3. **update_memory**：memory_id（文字列入力、内部で int 変換）に対し content/metadata を更新。  
+3. **update_memory**：memory_id に対し content/metadata を更新。  
 4. **delete_all_memories**：user_id/agent_id/run_id スコープで一括削除。  
 5. **list_memories**：記憶の一覧。filters(JSON 文字列)、limit/offset、user_id/agent_id/run_id。  
 
@@ -29,8 +29,9 @@
 
 ### バージョン履歴
 | バージョン | 日付    | 変更内容        |
-|-----------|--------|----------------|
-| v0.0.1    | Initial| 最初のリリース  |
+|-----------|---------|----------------|
+| v0.0.2    | 2024-12 | ワークフローテキスト出力の改善、IDと主要フィールドを追加、PowerMem 0.2.0 SDK使用 |
+| v0.0.1    | Initial | 最初のリリース  |
 
 ### コントリビューション
 - [PowerMem](https://github.com/oceanbase/powermem) 本体リポジトリ  

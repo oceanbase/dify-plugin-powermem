@@ -42,9 +42,19 @@ class ListMemoriesTool(Tool):
 
             lines = [f"Found {len(results)} memories"]
             for idx, r in enumerate(results, 1):
-                lines.append(f"{idx}. {r.get('content', r.get('memory',''))}")
-                if r.get("metadata"):
-                    lines.append(f"   metadata: {r.get('metadata')}")
+                memory_id = r.get('id', '')
+                content = r.get('content', r.get('memory',''))
+                user_id = r.get('user_id', '')
+                agent_id = r.get('agent_id', '')
+                run_id = r.get('run_id', '')
+                
+                lines.append(f"{idx}. ID:{memory_id} {content}")
+                if user_id:
+                    lines.append(f"   user_id: {user_id}")
+                if agent_id:
+                    lines.append(f"   agent_id: {agent_id}")
+                if run_id:
+                    lines.append(f"   run_id: {run_id}")
             yield self.create_text_message("\n".join(lines))
         except Exception as exc:  # noqa: BLE001
             error = f"Failed to list memories: {exc}"

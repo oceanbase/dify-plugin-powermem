@@ -1,7 +1,7 @@
 ## PowerMem [![PowerMem](https://img.shields.io/badge/PowerMem-blue)](https://www.powermem.ai/)
 
 **Author:** oceanbase  
-**Version:** 0.0.1  
+**Version:** 0.0.2  
 **Type:** tool  
 
 ### Description
@@ -12,7 +12,7 @@
 ### Tools Introduction
 1. **add_memory**: add or intelligently merge; messages (str/JSON list/dict), user_id/agent_id/run_id, metadata (JSON string), infer (default true).  
 2. **search_memories**: vector/hybrid search; query, user_id/agent_id/run_id, limit, threshold, filters (JSON string).  
-3. **update_memory**: update by memory_id (string input, cast to int) with content/metadata.  
+3. **update_memory**: update by memory_id with content/metadata.  
 4. **delete_all_memories**: delete all by user_id/agent_id/run_id scope.  
 5. **list_memories**: list memories; filters (JSON string), limit/offset, user_id/agent_id/run_id.  
 
@@ -22,15 +22,16 @@
 
 ### Notes
 - infer=true uses intelligent mode; infer=false uses simple mode.  
-- OceanBase only when db_provider=oceanbase; default sqlite.  
+- OceanBase only when DB Type is oceanbase; default sqlite.  
 - Ensure the OceanBase database exists before using it as vector store.  
-- seekdb as light OceanBase: choose db_provider=oceanbase and fill seekdb connection to use it as vector store.  
+- seekdb as light OceanBase: choose DB Type to be oceanbase and fill seekdb connection to use it as vector store.  
 - Scope user_id/agent_id affects search/update/delete; leave empty for no scope.  
 
 ### Version History
-| Version | Date   | Changes        |
-|---------|--------|----------------|
-| v0.0.1  | Initial| First release  |
+| Version | Date    | Changes        |
+|---------|---------|----------------|
+| v0.0.2  | 2024-12 | Enhanced workflow text output with ID and key fields, use PowerMem 0.2.0 SDK |
+| v0.0.1  | Initial | First release  |
 
 ### Contributing
 - [PowerMem](https://github.com/oceanbase/powermem) main repo  

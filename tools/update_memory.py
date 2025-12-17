@@ -49,7 +49,8 @@ class UpdateMemoryTool(Tool):
             if isinstance(result, dict) and "id" in result:
                 result["id"] = str(result["id"])
             yield self.create_json_message({"status": "SUCCESS", "results": result})
-            yield self.create_text_message(f"Memory {memory_id} updated.")
+            updated_id = result.get('id', memory_id)
+            yield self.create_text_message(f"Memory updated. ID:{updated_id}")
         except Exception as exc:  # noqa: BLE001
             error = f"Failed to update memory: {exc}"
             yield self.create_json_message({"status": "ERROR", "message": error, "results": {}})

@@ -1,4 +1,4 @@
-version: 0.0.1
+version: 0.0.2
 type: plugin
 author: oceanbase
 name: powermem
@@ -19,7 +19,7 @@ plugins:
   tools:
     - provider/powermem-local.yaml
 meta:
-  version: 0.0.1
+  version: 0.0.2
   arch:
     - amd64
     - arm64

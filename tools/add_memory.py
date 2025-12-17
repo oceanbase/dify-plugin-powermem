@@ -58,7 +58,10 @@ class AddMemoryTool(Tool):
             if results:
                 lines = ["Add memory completed."]
                 for idx, r in enumerate(results, 1):
-                    lines.append(f"{idx}. [{r.get('event','')}] {r.get('memory','')}")
+                    memory_id = r.get('id', '')
+                    event = r.get('event', '')
+                    memory = r.get('memory', '')
+                    lines.append(f"{idx}. ID:{memory_id} [{event}] {memory}")
                 yield self.create_text_message("\n".join(lines))
             else:
                 yield self.create_text_message("No memory added (empty content or infer returned no action).")
