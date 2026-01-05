@@ -21,11 +21,12 @@ class SearchMemoriesTool(Tool):
             yield self.create_text_message(error)
             return
 
-        user_id = tool_parameters.get("user_id")
-        agent_id = tool_parameters.get("agent_id")
-        run_id = tool_parameters.get("run_id")
+        user_id = tool_parameters.get("user_id") or None
+        agent_id = tool_parameters.get("agent_id") or None
+        run_id = tool_parameters.get("run_id") or None
         limit = tool_parameters.get("limit", 30)
         threshold = tool_parameters.get("threshold")
+        add_profile = tool_parameters.get("add_profile", False)
 
         filters_raw = tool_parameters.get("filters")
         filters, filters_err = parse_json_field(filters_raw, "filters")
@@ -42,6 +43,7 @@ class SearchMemoriesTool(Tool):
             "limit": limit,
             "threshold": threshold,
             "filters": filters,
+            "add_profile": add_profile,
         }
 
         try:
@@ -51,15 +53,15 @@ class SearchMemoriesTool(Tool):
             for item in results:
                 if isinstance(item, dict) and "id" in item:
                     item["id"] = str(item["id"])
-            json_msg = {"status": "SUCCESS", "results": results}
-            if "relations" in result:
-                json_msg["relations"] = result["relations"]
+            
+            json_msg = {"status": "SUCCESS"}
+            json_msg.update(result)
             yield self.create_json_message(json_msg)
 
             # text summary
             lines = [f"Query: {query}", f"Found: {len(results)}"]
             for idx, r in enumerate(results, 1):
-                memory_id = r.get('id', '')
+                memory_id = str(r.get('id', ''))
                 memory = r.get('memory', '')
                 user_id = r.get('user_id', '')
                 agent_id = r.get('agent_id', '')
@@ -75,6 +77,19 @@ class SearchMemoriesTool(Tool):
                     lines.append(f"   agent_id: {agent_id}")
                 if run_id:
                     lines.append(f"   run_id: {run_id}")
+            
+            # Add user profile information if present (UserMemory feature)
+            if result.get("profile_content") or result.get("topics"):
+                lines.append("")
+                lines.append("User Profile:")
+                if result.get("profile_content"):
+                    lines.append(f"  Content: {result['profile_content']}")
+                if result.get("topics"):
+                    lines.append("  Topics:")
+                    topics = result["topics"]
+                    for key, value in topics.items():
+                        lines.append(f"    - {key}: {value}")
+            
             yield self.create_text_message("\n".join(lines))
         except Exception as exc:  # noqa: BLE001
             error = f"Failed to search memories: {exc}"

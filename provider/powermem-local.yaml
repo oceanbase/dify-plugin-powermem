@@ -114,6 +114,20 @@ credentials_for_provider:
     label:
       en_US: OceanBase Database
       zh_Hans: OceanBase 数据库
+  graph_store_enabled:
+    type: boolean
+    required: false
+    default: false
+    label:
+      en_US: Enable Graph Store (Knowledge Graph, OceanBase only)
+      zh_Hans: 启用知识图谱（仅支持 OceanBase）
+  user_profile_enabled:
+    type: boolean
+    required: false
+    default: false
+    label:
+      en_US: Enable User Profile (Auto extract user profile from conversations, OceanBase only)
+      zh_Hans: 启用用户画像（自动从对话中提取用户画像，仅支持 OceanBase）
 
 tools:
   - tools/add_memory.yaml
@@ -121,6 +135,9 @@ tools:
   - tools/update_memory.yaml
   - tools/delete_all_memories.yaml
   - tools/list_memories.yaml
+  - tools/get_profile.yaml
+  - tools/list_profiles.yaml
+  - tools/delete_profile.yaml
 extra:
   python:
     source: provider/powermem-local.py

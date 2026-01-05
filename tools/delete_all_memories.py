@@ -13,9 +13,9 @@ class DeleteAllMemoriesTool(Tool):
     """Delete all memories via powermem (sync)."""
 
     def _invoke(self, tool_parameters: dict[str, Any]) -> Generator[ToolInvokeMessage, None, None]:
-        user_id = tool_parameters.get("user_id")
-        agent_id = tool_parameters.get("agent_id")
-        run_id = tool_parameters.get("run_id")
+        user_id = tool_parameters.get("user_id") or None
+        agent_id = tool_parameters.get("agent_id") or None
+        run_id = tool_parameters.get("run_id") or None
 
         try:
             success = powermem_client.delete_all(self.runtime.credentials, user_id, agent_id, run_id)

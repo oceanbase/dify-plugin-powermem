@@ -38,7 +38,17 @@ def get_memory(credentials: dict[str, Any]):
     config_hash = _hash_config(config)
     with _lock:
         if _memory is None or _memory_hash != config_hash:
-            _memory = create_memory(config=config)
+            # Check if user profile feature is enabled
+            user_profile_enabled = credentials.get("user_profile_enabled") is True
+            db_provider = credentials.get("db_provider", "sqlite").lower()
+            
+            # User profile feature is only available with OceanBase
+            if user_profile_enabled and db_provider == "oceanbase":
+                from powermem import UserMemory
+                _memory = UserMemory(config=config)
+            else:
+                _memory = create_memory(config=config)
+            
             _memory_hash = config_hash
     return _memory
 
@@ -66,4 +76,19 @@ def delete_all(credentials: dict[str, Any], user_id: str | None, agent_id: str |
 def get_all(credentials: dict[str, Any], params: dict[str, Any]) -> dict[str, Any]:
     mem = get_memory(credentials)
     return _convert_dt(mem.get_all(**params))
+
+
+def get_profile(credentials: dict[str, Any], user_id: str) -> dict[str, Any]:
+    mem = get_memory(credentials)
+    return _convert_dt(mem.profile(user_id=user_id))
+
+
+def list_profiles(credentials: dict[str, Any], params: dict[str, Any]) -> list[dict[str, Any]]:
+    mem = get_memory(credentials)
+    return _convert_dt(mem.profile_list(**params))
+
+
+def delete_profile(credentials: dict[str, Any], user_id: str) -> bool:
+    mem = get_memory(credentials)
+    return bool(mem.delete_profile(user_id=user_id))
 

@@ -88,6 +88,18 @@ parameters:
       zh_Hans: 可选过滤条件，JSON 字符串。
     llm_description: Optional filters JSON.
     form: llm
+  - name: add_profile
+    type: boolean
+    required: false
+    default: false
+    label:
+      en_US: Include User Profile (UserMemory only)
+      zh_Hans: 包含用户画像（仅 UserMemory）
+    human_description:
+      en_US: Include user profile information in search results (only works when User Profile feature is enabled).
+      zh_Hans: 在搜索结果中包含用户画像信息（仅当启用用户画像功能时有效）。
+    llm_description: Include user profile in results (requires User Profile feature enabled).
+    form: form
 extra:
   python:
     source: tools/search_memories.py

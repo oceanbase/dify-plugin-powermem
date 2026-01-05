@@ -1,0 +1,27 @@
+identity:
+  name: get_profile
+  author: PowerMem Team
+  label:
+    en_US: Get User Profile
+    zh_Hans: 获取用户画像
+description:
+  human:
+    en_US: Get user profile information. Requires User Profile feature enabled with OceanBase.
+    zh_Hans: 获取用户画像信息。需要启用用户画像功能并使用 OceanBase 数据库。
+  llm: Get user profile by user_id. Requires user_profile_enabled=true and db_provider=oceanbase.
+parameters:
+  - name: user_id
+    type: string
+    required: true
+    label:
+      en_US: User ID
+      zh_Hans: 用户ID
+    human_description:
+      en_US: User identifier (required).
+      zh_Hans: 用户标识（必填）。
+    llm_description: User identifier (required).
+    form: llm
+extra:
+  python:
+    source: tools/get_profile.py
+

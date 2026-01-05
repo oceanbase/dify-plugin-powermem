@@ -135,5 +135,26 @@ def build_config(credentials: dict[str, Any]) -> dict[str, Any]:
     emb_conf["api_key"] = credentials.get("embedder_api_key")
     emb_conf["model"] = credentials.get("embedder_model") or "text-embedding-v4"
 
+    # Graph Store Configuration (only if OceanBase is used)
+    graph_store_enabled = credentials.get("graph_store_enabled") is True
+    if graph_store_enabled and db_provider == "oceanbase":
+        graph_config = {
+            'host': ob_host,
+            'port': ob_port,
+            'user': ob_user,
+            'password': ob_password,
+            'db_name': ob_db_name,
+            'vidx_metric_type': 'cosine',
+            'index_type': 'HNSW',
+            'embedding_model_dims': 1536,
+            'max_hops': 3
+        }
+        
+        config["graph_store"] = {
+            'enabled': True,
+            'provider': 'oceanbase',
+            'config': graph_config
+        }
+
     return config
 

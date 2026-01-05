@@ -22,8 +22,8 @@ class UpdateMemoryTool(Tool):
             yield self.create_text_message(error)
             return
 
-        user_id = tool_parameters.get("user_id")
-        agent_id = tool_parameters.get("agent_id")
+        user_id = tool_parameters.get("user_id") or None
+        agent_id = tool_parameters.get("agent_id") or None
         metadata_raw = tool_parameters.get("metadata")
         metadata, meta_err = parse_json_field(metadata_raw, "metadata")
         if meta_err:
@@ -48,8 +48,12 @@ class UpdateMemoryTool(Tool):
             # Convert id to string
             if isinstance(result, dict) and "id" in result:
                 result["id"] = str(result["id"])
-            yield self.create_json_message({"status": "SUCCESS", "results": result})
-            updated_id = result.get('id', memory_id)
+            
+            json_msg = {"status": "SUCCESS"}
+            json_msg.update(result)
+            yield self.create_json_message(json_msg)
+            
+            updated_id = str(result.get('id', memory_id))
             yield self.create_text_message(f"Memory updated. ID:{updated_id}")
         except Exception as exc:  # noqa: BLE001
             error = f"Failed to update memory: {exc}"

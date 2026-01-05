@@ -1,0 +1,84 @@
+identity:
+  name: list_profiles
+  author: PowerMem Team
+  label:
+    en_US: List User Profiles
+    zh_Hans: 列出用户画像
+description:
+  human:
+    en_US: List user profiles with optional filtering. Requires User Profile feature enabled with OceanBase.
+    zh_Hans: 列出用户画像，支持过滤。需要启用用户画像功能并使用 OceanBase 数据库。
+  llm: List user profiles with optional filters. Requires user_profile_enabled=true and db_provider=oceanbase.
+parameters:
+  - name: user_id
+    type: string
+    required: false
+    label:
+      en_US: User ID
+      zh_Hans: 用户ID
+    human_description:
+      en_US: Optional user identifier to filter.
+      zh_Hans: 可选用户标识，用于过滤。
+    llm_description: Optional user identifier.
+    form: llm
+  - name: main_topic
+    type: string
+    required: false
+    label:
+      en_US: Main Topics (JSON array)
+      zh_Hans: 主题（JSON数组）
+    human_description:
+      en_US: Optional JSON array of main topic names to filter, e.g. ["basic_information", "professional"].
+      zh_Hans: 可选主题名称的 JSON 数组，例如 ["basic_information", "professional"]。
+    llm_description: Optional main topics JSON array.
+    form: llm
+  - name: sub_topic
+    type: string
+    required: false
+    label:
+      en_US: Sub Topics (JSON array)
+      zh_Hans: 子主题（JSON数组）
+    human_description:
+      en_US: Optional JSON array of sub topic paths, e.g. ["basic_information.user_name", "professional.occupation"].
+      zh_Hans: 可选子主题路径的 JSON 数组，例如 ["basic_information.user_name", "professional.occupation"]。
+    llm_description: Optional sub topics JSON array.
+    form: llm
+  - name: topic_value
+    type: string
+    required: false
+    label:
+      en_US: Topic Values (JSON array)
+      zh_Hans: 主题值（JSON数组）
+    human_description:
+      en_US: Optional JSON array of topic values to filter by exact match.
+      zh_Hans: 可选主题值的 JSON 数组，用于精确匹配过滤。
+    llm_description: Optional topic values JSON array.
+    form: llm
+  - name: limit
+    type: number
+    required: false
+    default: 100
+    label:
+      en_US: Limit
+      zh_Hans: 数量限制
+    human_description:
+      en_US: Max number of profiles to return (default 100).
+      zh_Hans: 返回的画像数量上限（默认 100）。
+    llm_description: Max number of profiles.
+    form: form
+  - name: offset
+    type: number
+    required: false
+    default: 0
+    label:
+      en_US: Offset
+      zh_Hans: 偏移量
+    human_description:
+      en_US: Offset for pagination (default 0).
+      zh_Hans: 分页偏移量（默认 0）。
+    llm_description: Pagination offset.
+    form: form
+extra:
+  python:
+    source: tools/list_profiles.py
+

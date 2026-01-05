@@ -35,14 +35,14 @@ class ListMemoriesTool(Tool):
             for item in results:
                 if isinstance(item, dict) and "id" in item:
                     item["id"] = str(item["id"])
-            json_msg = {"status": "SUCCESS", "results": results}
-            if "relations" in result:
-                json_msg["relations"] = result["relations"]
+            
+            json_msg = {"status": "SUCCESS"}
+            json_msg.update(result)
             yield self.create_json_message(json_msg)
 
             lines = [f"Found {len(results)} memories"]
             for idx, r in enumerate(results, 1):
-                memory_id = r.get('id', '')
+                memory_id = str(r.get('id', ''))
                 content = r.get('content', r.get('memory',''))
                 user_id = r.get('user_id', '')
                 agent_id = r.get('agent_id', '')
