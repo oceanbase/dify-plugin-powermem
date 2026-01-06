@@ -20,7 +20,7 @@
 8. **delete_profile**：按 user_id 删除用户画像（需启用用户画像且 OceanBase）。  
 
 ### 使用说明
-1. 配置凭证：llm_provider（默认 qwen）、llm_api_key、llm_model（默认 qwen-plus）；embedder_provider（默认 qwen）、embedder_api_key、embedder_model（默认 text-embedding-v4）；db_provider（默认 sqlite）。  
+1. 配置凭证：llm_provider（qwen/openai/硅基流动/deepseek，默认 qwen）、llm_api_key、llm_model（默认 qwen-plus）；embedder_provider（qwen/openai，默认 qwen）、embedder_api_key、embedder_model（默认 text-embedding-v4）、embedder_dims（默认 1536）；db_provider（默认 sqlite）。  
 2. 如选 oceanbase，填写 host/port/user/password/database，并可选：graph_store_enabled（启用图谱，需 oceanbase），user_profile_enabled（启用用户画像，需 oceanbase）。  
 
 ### 版本历史

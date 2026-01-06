@@ -25,6 +25,14 @@ credentials_for_provider:
         label:
           en_US: openai
           zh_Hans: openai
+      - value: siliconflow
+        label:
+          en_US: siliconflow
+          zh_Hans: siliconflow
+      - value: deepseek
+        label:
+          en_US: deepseek
+          zh_Hans: deepseek
     default: qwen
   llm_api_key:
     type: secret-input
@@ -68,6 +76,13 @@ credentials_for_provider:
     label:
       en_US: Embedding Model
       zh_Hans: 向量模型
+  embedder_dims:
+    type: text-input
+    required: false
+    default: "1536"
+    label:
+      en_US: Embedding Dimensions
+      zh_Hans: 向量维度
   db_provider:
     type: select
     required: true

@@ -20,7 +20,7 @@
 8. **delete_profile**：user_id でユーザープロファイル削除（ユーザープロファイル有効かつ OceanBase 必須）。  
 
 ### 使い方
-1. 資格情報：llm_provider（デフォルト qwen）、llm_api_key、llm_model（デフォルト qwen-plus）；embedder_provider（デフォルト qwen）、embedder_api_key、embedder_model（デフォルト text-embedding-v4）；db_provider（デフォルト sqlite）。  
+1. 資格情報：llm_provider（qwen / openai / siliconflow / deepseek、デフォルト qwen）、llm_api_key、llm_model（デフォルト qwen-plus）；embedder_provider（qwen / openai、デフォルト qwen）、embedder_api_key、embedder_model（デフォルト text-embedding-v4）、embedder_dims（デフォルト 1536）；db_provider（デフォルト sqlite）。  
 2. oceanbase を選ぶ場合、host/port/user/password/database を入力し、必要に応じて graph_store_enabled（グラフストア有効、OceanBase のみ）、user_profile_enabled（ユーザープロファイル有効、OceanBase のみ）を設定。
 
 ### 注意事項

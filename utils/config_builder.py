@@ -22,7 +22,6 @@ def _default_config() -> Dict[str, Any]:
         "max_tokens": 1000,
         "top_p": 0.8,
         "top_k": 50,
-        "enable_search": False,
     }
 
     embedder_config = {
@@ -96,6 +95,8 @@ def build_config(credentials: dict[str, Any]) -> dict[str, Any]:
         ob_password = credentials.get("oceanbase_password", "")
         ob_db_name = credentials.get("oceanbase_database") or "powermem"
 
+        embedding_dims = int(credentials.get("embedder_dims") or 1536)
+
         oceanbase_config = {
             "collection_name": "memories",
             "connection_args": {
@@ -107,7 +108,7 @@ def build_config(credentials: dict[str, Any]) -> dict[str, Any]:
             },
             "vidx_metric_type": "cosine",
             "index_type": "IVF_FLAT",
-            "embedding_model_dims": 1536,
+            "embedding_model_dims": embedding_dims,
             "primary_field": "id",
             "vector_field": "embedding",
             "text_field": "document",
@@ -123,10 +124,16 @@ def build_config(credentials: dict[str, Any]) -> dict[str, Any]:
     llm_conf = config["llm"].setdefault("config", {})
     llm_conf["api_key"] = credentials.get("llm_api_key")
     llm_conf["model"] = credentials.get("llm_model") or "qwen-plus"
+    llm_conf.pop("enable_search", None)
     if llm_provider == "qwen":
         llm_conf["dashscope_base_url"] = "https://dashscope.aliyuncs.com/api/v1"
+        llm_conf["enable_search"] = False
     elif llm_provider == "openai":
         llm_conf["openai_base_url"] = "https://api.openai.com/v1"
+    elif llm_provider == "siliconflow":
+        llm_conf["openai_base_url"] = "https://api.siliconflow.cn/v1"
+    elif llm_provider == "deepseek":
+        llm_conf["deepseek_base_url"] = "https://api.deepseek.com"
 
     # Embedder provider/model/config
     embedder_provider = (credentials.get("embedder_provider") or "qwen").lower()
@@ -134,10 +141,12 @@ def build_config(credentials: dict[str, Any]) -> dict[str, Any]:
     emb_conf = config["embedder"].setdefault("config", {})
     emb_conf["api_key"] = credentials.get("embedder_api_key")
     emb_conf["model"] = credentials.get("embedder_model") or "text-embedding-v4"
+    emb_conf["embedding_dims"] = int(credentials.get("embedder_dims") or 1536)
 
     # Graph Store Configuration (only if OceanBase is used)
     graph_store_enabled = credentials.get("graph_store_enabled") is True
     if graph_store_enabled and db_provider == "oceanbase":
+        graph_embedding_dims = int(credentials.get("embedder_dims") or 1536)
         graph_config = {
             'host': ob_host,
             'port': ob_port,
@@ -146,7 +155,7 @@ def build_config(credentials: dict[str, Any]) -> dict[str, Any]:
             'db_name': ob_db_name,
             'vidx_metric_type': 'cosine',
             'index_type': 'HNSW',
-            'embedding_model_dims': 1536,
+            'embedding_model_dims': graph_embedding_dims,
             'max_hops': 3
         }
         

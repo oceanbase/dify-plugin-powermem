@@ -20,7 +20,7 @@
 8. **delete_profile**: delete user profile by user_id (requires User Profile enabled and OceanBase).  
 
 ### Usage Instructions
-1. Credentials: llm_provider (default qwen), llm_api_key, llm_model (default qwen-plus); embedder_provider (default qwen), embedder_api_key, embedder_model (default text-embedding-v4); db_provider (default sqlite).  
+1. Credentials: llm_provider (qwen/openai/siliconflow/deepseek; default qwen), llm_api_key, llm_model (default qwen-plus); embedder_provider (qwen/openai; default qwen), embedder_api_key, embedder_model (default text-embedding-v4), embedder_dims (default 1536); db_provider (default sqlite).  
 2. If using oceanbase, fill host/port/user/password/database, optionally graph_store_enabled (graph, OceanBase only) and user_profile_enabled (User Profile, OceanBase only).
 
 ### Notes
