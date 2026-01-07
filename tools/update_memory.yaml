@@ -19,7 +19,7 @@ parameters:
     human_description:
       en_US: ID of the memory to update.
       zh_Hans: 要更新的记忆 ID。
-    llm_description: Target memory ID.
+    llm_description: "Required. Target memory ID (SDK expects int; plugin accepts string and will cast to int). Use the id returned by add_memory/search_memories/list_memories."
     form: llm
   - name: content
     type: string
@@ -30,7 +30,7 @@ parameters:
     human_description:
       en_US: New memory content.
       zh_Hans: 新的记忆内容。
-    llm_description: New memory content.
+    llm_description: "Required. New memory content (non-empty). SDK will re-embed this content and update the record."
     form: llm
   - name: user_id
     type: string
@@ -41,7 +41,7 @@ parameters:
     human_description:
       en_US: Optional user identifier to scope update.
       zh_Hans: 可选用户标识，用于限定更新范围。
-    llm_description: Optional user identifier.
+    llm_description: "Optional. Scope/access filter (SDK: update(memory_id, content, user_id, agent_id, metadata)). If provided, must match the memory's user_id; otherwise update may return not found/access denied."
     form: llm
   - name: agent_id
     type: string
@@ -52,7 +52,7 @@ parameters:
     human_description:
       en_US: Optional agent identifier to scope update.
       zh_Hans: 可选代理标识，用于限定更新范围。
-    llm_description: Optional agent identifier.
+    llm_description: "Optional. Scope/access filter. If provided, must match the memory's agent_id (can be combined with user_id)."
     form: llm
   - name: metadata
     type: string
@@ -63,7 +63,7 @@ parameters:
     human_description:
       en_US: Optional metadata in JSON string.
       zh_Hans: 可选元数据，JSON 字符串。
-    llm_description: Optional metadata JSON.
+    llm_description: "Optional. JSON string object for metadata. If omitted, SDK will try to reuse existing metadata. Example: \"{\\\"category\\\":\\\"work\\\",\\\"source\\\":\\\"workflow\\\"}\""
     form: llm
 extra:
   python:

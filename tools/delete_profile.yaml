@@ -1,0 +1,27 @@
+identity:
+  name: delete_profile
+  author: PowerMem Team
+  label:
+    en_US: Delete User Profile
+    zh_Hans: 删除用户画像
+description:
+  human:
+    en_US: Delete user profile by user_id (sync). Only available when User Profile feature is enabled (UserMemory + OceanBase).
+    zh_Hans: 同步通过 user_id 删除用户画像。仅在启用用户画像功能（UserMemory + OceanBase）时可用。
+  llm: "DANGEROUS/DESTRUCTIVE. Delete user profile by user_id (UserMemory.delete_profile). You MUST ask for explicit second confirmation before calling this tool (e.g., user replies: CONFIRM DELETE PROFILE). If the user has not clearly confirmed, do NOT call. Only works when user_profile_enabled=true and db_provider=oceanbase."
+parameters:
+  - name: user_id
+    type: string
+    required: true
+    label:
+      en_US: User ID
+      zh_Hans: 用户ID
+    human_description:
+      en_US: User identifier (required).
+      zh_Hans: 用户标识（必填）。
+    llm_description: "Required. User identifier string. SDK: UserMemory.delete_profile(user_id) returns bool (True if deleted, False if profile not found)."
+    form: llm
+extra:
+  python:
+    source: tools/delete_profile.py
+

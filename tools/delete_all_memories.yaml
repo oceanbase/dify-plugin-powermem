@@ -8,7 +8,7 @@ description:
   human:
     en_US: Delete all memories by scope (sync).
     zh_Hans: 按范围同步删除所有记忆。
-  llm: Delete all memories with optional user/agent/run scope.
+  llm: "DANGEROUS/DESTRUCTIVE. Delete memories by scope (user_id/agent_id/run_id). You MUST ask for explicit second confirmation before calling this tool (e.g., user replies: CONFIRM DELETE). If the user has not clearly confirmed, do NOT call."
 parameters:
   - name: user_id
     type: string
@@ -19,7 +19,7 @@ parameters:
     human_description:
       en_US: Optional user identifier to scope deletion.
       zh_Hans: 可选用户标识，用于限定删除范围。
-    llm_description: Optional user identifier.
+    llm_description: "Optional. Delete scope filter. If provided, only deletes memories under this user_id. IMPORTANT: if user_id/agent_id/run_id are all empty, it will delete ALL memories."
     form: llm
   - name: agent_id
     type: string
@@ -30,7 +30,7 @@ parameters:
     human_description:
       en_US: Optional agent identifier to scope deletion.
       zh_Hans: 可选代理标识，用于限定删除范围。
-    llm_description: Optional agent identifier.
+    llm_description: "Optional. Delete scope filter. If provided, only deletes memories under this agent_id (can be combined with user_id/run_id). IMPORTANT: leaving all scope fields empty deletes ALL memories."
     form: llm
   - name: run_id
     type: string
@@ -41,7 +41,7 @@ parameters:
     human_description:
       en_US: Optional run identifier to scope deletion.
       zh_Hans: 可选运行标识，用于限定删除范围。
-    llm_description: Optional run identifier.
+    llm_description: "Optional. Delete scope filter for a run/session (can be combined with user_id/agent_id). IMPORTANT: leaving all scope fields empty deletes ALL memories."
     form: llm
 extra:
   python:

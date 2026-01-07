@@ -25,6 +25,14 @@ credentials_for_provider:
         label:
           en_US: openai
           zh_Hans: openai
+      - value: siliconflow
+        label:
+          en_US: siliconflow
+          zh_Hans: siliconflow
+      - value: deepseek
+        label:
+          en_US: deepseek
+          zh_Hans: deepseek
     default: qwen
   llm_api_key:
     type: secret-input
@@ -68,6 +76,13 @@ credentials_for_provider:
     label:
       en_US: Embedding Model
       zh_Hans: 向量模型
+  embedder_dims:
+    type: text-input
+    required: false
+    default: "1536"
+    label:
+      en_US: Embedding Dimensions
+      zh_Hans: 向量维度
   db_provider:
     type: select
     required: true
@@ -114,6 +129,20 @@ credentials_for_provider:
     label:
       en_US: OceanBase Database
       zh_Hans: OceanBase 数据库
+  graph_store_enabled:
+    type: boolean
+    required: false
+    default: false
+    label:
+      en_US: Enable Graph Store (Knowledge Graph, OceanBase only)
+      zh_Hans: 启用知识图谱（仅支持 OceanBase）
+  user_profile_enabled:
+    type: boolean
+    required: false
+    default: false
+    label:
+      en_US: Enable User Profile (Auto extract user profile from conversations, OceanBase only)
+      zh_Hans: 启用用户画像（自动从对话中提取用户画像，仅支持 OceanBase）
 
 tools:
   - tools/add_memory.yaml
@@ -121,6 +150,9 @@ tools:
   - tools/update_memory.yaml
   - tools/delete_all_memories.yaml
   - tools/list_memories.yaml
+  - tools/get_profile.yaml
+  - tools/list_profiles.yaml
+  - tools/delete_profile.yaml
 extra:
   python:
     source: provider/powermem-local.py

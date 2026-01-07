@@ -30,7 +30,7 @@ parameters:
     human_description:
       en_US: Optional user identifier to scope search.
       zh_Hans: 可选用户标识，用于限定搜索范围。
-    llm_description: Optional user identifier.
+    llm_description: "Optional. Filter search by user_id (SDK: Memory.search(user_id)). If add_profile=true (UserMemory only), you MUST provide a non-empty user_id, otherwise profile_content/topics will not be returned."
     form: llm
   - name: agent_id
     type: string
@@ -41,7 +41,7 @@ parameters:
     human_description:
       en_US: Optional agent identifier to scope search.
       zh_Hans: 可选代理标识，用于限定搜索范围。
-    llm_description: Optional agent identifier.
+    llm_description: "Optional. Filter search by agent_id (SDK: Memory.search(agent_id)). Use when multiple agents share the same user_id."
     form: llm
   - name: run_id
     type: string
@@ -52,7 +52,7 @@ parameters:
     human_description:
       en_US: Optional run identifier to scope search.
       zh_Hans: 可选运行标识，用于限定搜索范围。
-    llm_description: Optional run identifier.
+    llm_description: "Optional. Filter search by run_id/session (SDK: Memory.search(run_id))."
     form: llm
   - name: limit
     type: number
@@ -64,8 +64,8 @@ parameters:
     human_description:
       en_US: Max number of results (default 30).
       zh_Hans: 返回结果数量上限（默认 30）。
-    llm_description: Max number of results.
-    form: form
+    llm_description: "Optional. Max number of results to return (SDK expects int, default 30)."
+    form: llm
   - name: threshold
     type: number
     required: false
@@ -75,8 +75,8 @@ parameters:
     human_description:
       en_US: Optional score threshold to filter results.
       zh_Hans: 可选相似度阈值。
-    llm_description: Optional score threshold.
-    form: form
+    llm_description: "Optional. Similarity threshold in [0.0, 1.0]. SDK behavior: only keep results where score >= threshold."
+    form: llm
   - name: filters
     type: string
     required: false
@@ -86,7 +86,19 @@ parameters:
     human_description:
       en_US: Optional filters as JSON string.
       zh_Hans: 可选过滤条件，JSON 字符串。
-    llm_description: Optional filters JSON.
+    llm_description: "Optional. JSON string object for advanced filtering (SDK: filters: dict). Passed into storage search as metadata filters and may also be used for sub-store routing. Example: \"{\\\"category\\\":\\\"work\\\"}\""
+    form: llm
+  - name: add_profile
+    type: boolean
+    required: false
+    default: false
+    label:
+      en_US: Include User Profile (UserMemory only)
+      zh_Hans: 包含用户画像（仅 UserMemory）
+    human_description:
+      en_US: Include user profile information in search results (only works when User Profile feature is enabled).
+      zh_Hans: 在搜索结果中包含用户画像信息（仅当启用用户画像功能时有效）。
+    llm_description: "UserMemory only. If true, include user profile in top-level fields (profile_content/topics) if available. SDK behavior: profile is only added when add_profile=true AND user_id is provided."
     form: llm
 extra:
   python:
