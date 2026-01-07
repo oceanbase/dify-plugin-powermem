@@ -19,7 +19,7 @@ parameters:
     human_description:
       en_US: Optional user identifier to scope listing.
       zh_Hans: 可选用户标识，用于限定查询范围。
-    llm_description: Optional user identifier.
+    llm_description: "Optional. User identifier to scope listing. If omitted (and agent_id/run_id also omitted), it lists memories across all users (may be large). Use a stable unique ID like \"user_123\"."
     form: llm
   - name: agent_id
     type: string
@@ -30,7 +30,7 @@ parameters:
     human_description:
       en_US: Optional agent identifier to scope listing.
       zh_Hans: 可选代理标识，用于限定查询范围。
-    llm_description: Optional agent identifier.
+    llm_description: "Optional. Agent identifier to scope listing for a specific agent/bot (can be combined with user_id/run_id). Omit if not needed."
     form: llm
   - name: run_id
     type: string
@@ -41,7 +41,7 @@ parameters:
     human_description:
       en_US: Optional run identifier to scope listing.
       zh_Hans: 可选运行标识，用于限定查询范围。
-    llm_description: Optional run identifier.
+    llm_description: "Optional. Run/session identifier to scope listing (can be combined with user_id/agent_id). Omit if not needed."
     form: llm
   - name: limit
     type: number
@@ -53,8 +53,8 @@ parameters:
     human_description:
       en_US: Max number of results (default 100).
       zh_Hans: 返回结果数量上限（默认 100）。
-    llm_description: Max number of results.
-    form: form
+    llm_description: "Optional. Max number of results to return (integer, default 100). Use smaller values for safer pagination."
+    form: llm
   - name: offset
     type: number
     required: false
@@ -65,8 +65,8 @@ parameters:
     human_description:
       en_US: Offset for pagination (default 0).
       zh_Hans: 分页偏移量（默认 0）。
-    llm_description: Pagination offset.
-    form: form
+    llm_description: "Optional. Pagination offset (integer, default 0). Example: first page limit=50 offset=0; second page limit=50 offset=50."
+    form: llm
   - name: filters
     type: string
     required: false
@@ -76,7 +76,7 @@ parameters:
     human_description:
       en_US: Optional filters as JSON string.
       zh_Hans: 可选过滤条件，JSON 字符串。
-    llm_description: Optional filters JSON.
+    llm_description: "Optional. JSON string object forwarded to SDK as advanced filters. Note: in PowerMem, this mainly affects Graph Store listing when graph_store is enabled. Example: \"{\\\"type\\\":\\\"user_profile\\\"}\""
     form: llm
 extra:
   python:

@@ -6,9 +6,9 @@ identity:
     zh_Hans: 列出用户画像
 description:
   human:
-    en_US: List user profiles with optional filtering. Requires User Profile feature enabled with OceanBase.
-    zh_Hans: 列出用户画像，支持过滤。需要启用用户画像功能并使用 OceanBase 数据库。
-  llm: List user profiles with optional filters. Requires user_profile_enabled=true and db_provider=oceanbase.
+    en_US: List user profiles with optional filtering (sync). Only available when User Profile feature is enabled (UserMemory + OceanBase).
+    zh_Hans: 同步列出用户画像，支持过滤。仅在启用用户画像功能（UserMemory + OceanBase）时可用。
+  llm: List user profiles (UserMemory.profile_list). Only works when user_profile_enabled=true and db_provider=oceanbase.
 parameters:
   - name: user_id
     type: string
@@ -19,7 +19,7 @@ parameters:
     human_description:
       en_US: Optional user identifier to filter.
       zh_Hans: 可选用户标识，用于过滤。
-    llm_description: Optional user identifier.
+    llm_description: "Optional. Filter by a specific user_id (SDK: profile_list(user_id=...)). If omitted, lists profiles across users (paged by limit/offset)."
     form: llm
   - name: main_topic
     type: string
@@ -30,7 +30,7 @@ parameters:
     human_description:
       en_US: Optional JSON array of main topic names to filter, e.g. ["basic_information", "professional"].
       zh_Hans: 可选主题名称的 JSON 数组，例如 ["basic_information", "professional"]。
-    llm_description: Optional main topics JSON array.
+    llm_description: "Optional. JSON string array of main topic names to filter. Example: \"[\\\"basic_information\\\",\\\"professional\\\"]\" (matches top-level keys in topics)."
     form: llm
   - name: sub_topic
     type: string
@@ -41,7 +41,7 @@ parameters:
     human_description:
       en_US: Optional JSON array of sub topic paths, e.g. ["basic_information.user_name", "professional.occupation"].
       zh_Hans: 可选子主题路径的 JSON 数组，例如 ["basic_information.user_name", "professional.occupation"]。
-    llm_description: Optional sub topics JSON array.
+    llm_description: "Optional. JSON string array of sub topic paths in the format \"main_topic.sub_topic\" (SDK requirement). Example: \"[\\\"basic_information.user_name\\\",\\\"professional.occupation\\\"]\"."
     form: llm
   - name: topic_value
     type: string
@@ -52,7 +52,7 @@ parameters:
     human_description:
       en_US: Optional JSON array of topic values to filter by exact match.
       zh_Hans: 可选主题值的 JSON 数组，用于精确匹配过滤。
-    llm_description: Optional topic values JSON array.
+    llm_description: "Optional. JSON string array of topic values for exact-match filtering. Example: \"[\\\"Alice\\\",\\\"engineer\\\"]\"."
     form: llm
   - name: limit
     type: number
@@ -64,8 +64,8 @@ parameters:
     human_description:
       en_US: Max number of profiles to return (default 100).
       zh_Hans: 返回的画像数量上限（默认 100）。
-    llm_description: Max number of profiles.
-    form: form
+    llm_description: "Optional. Max number of profiles to return (SDK expects int, default 100)."
+    form: llm
   - name: offset
     type: number
     required: false
@@ -76,8 +76,8 @@ parameters:
     human_description:
       en_US: Offset for pagination (default 0).
       zh_Hans: 分页偏移量（默认 0）。
-    llm_description: Pagination offset.
-    form: form
+    llm_description: "Optional. Pagination offset (SDK expects int, default 0). Example: limit=50 offset=0 (page1), limit=50 offset=50 (page2). Returns a list of profiles; each item has keys like id, user_id, profile_content, topics, created_at, updated_at."
+    form: llm
 extra:
   python:
     source: tools/list_profiles.py

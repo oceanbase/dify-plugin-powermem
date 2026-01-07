@@ -8,7 +8,7 @@ description:
   human:
     en_US: Add a memory to PowerMem (sync).
     zh_Hans: 同步添加一条记忆到 PowerMem。
-  llm: Add a memory to PowerMem. messages can be str/dict/list.
+  llm: Add a memory to PowerMem (primarily used to record/store long-term memories for later retrieval). messages can be str/dict/list.
 parameters:
   - name: messages
     type: string
@@ -19,7 +19,7 @@ parameters:
     human_description:
       en_US: Memory content; accepts string or JSON list/dict (role/content).
       zh_Hans: 记忆内容；可为字符串或 JSON 列表/字典（含 role/content）。
-    llm_description: Memory content; string or JSON list/dict (role/content).
+    llm_description: "Required. Memory input. Use either: (1) plain text string; or (2) JSON string of a single message dict {\"role\":\"user|assistant|system\",\"content\":\"...\"}; or (3) JSON string of a message list [{\"role\":\"...\",\"content\":\"...\"}, ...]. Prefer (3) for multi-turn conversations."
     form: llm
   - name: user_id
     type: string
@@ -30,7 +30,7 @@ parameters:
     human_description:
       en_US: Optional user identifier to scope the memory.
       zh_Hans: 可选用户标识，用于限定记忆作用域。
-    llm_description: Optional user identifier.
+    llm_description: "Optional. User identifier used to scope/isolate memories. If User Profile feature is enabled (UserMemory + OceanBase), this becomes REQUIRED (must be non-empty). Use a stable unique ID (e.g., \"user_123\")."
     form: llm
   - name: agent_id
     type: string
@@ -41,7 +41,7 @@ parameters:
     human_description:
       en_US: Optional agent identifier to scope the memory.
       zh_Hans: 可选代理标识，用于限定记忆作用域。
-    llm_description: Optional agent identifier.
+    llm_description: "Optional. Agent identifier to scope memories for a specific agent/bot (useful when multiple agents share the same user_id). Leave empty if not needed."
     form: llm
   - name: run_id
     type: string
@@ -52,7 +52,7 @@ parameters:
     human_description:
       en_US: Optional run identifier to scope the memory.
       zh_Hans: 可选运行标识，用于限定记忆作用域。
-    llm_description: Optional run identifier.
+    llm_description: "Optional. Run/session identifier for scoping or tracing (e.g., a chat session id). Leave empty if not needed."
     form: llm
   - name: metadata
     type: string
@@ -63,7 +63,7 @@ parameters:
     human_description:
       en_US: Optional metadata in JSON string.
       zh_Hans: 可选元数据，JSON 字符串。
-    llm_description: Optional metadata JSON string.
+    llm_description: "Optional. JSON string object for extra fields, e.g. \"{\\\"source\\\":\\\"workflow\\\",\\\"tags\\\":[\\\"foo\\\"]}\". Use {} or empty to omit."
     form: llm
   - name: infer
     type: boolean
@@ -73,10 +73,10 @@ parameters:
       en_US: Intelligent mode (infer)
       zh_Hans: 智能模式
     human_description:
-      en_US: Enable powermem intelligent mode (default true).
-      zh_Hans: 是否启用 powermem 智能模式（默认开启）。
-    llm_description: Flag to enable intelligent mode (default true).
-    form: form
+      en_US: "If true (default), PowerMem runs intelligent memory processing: uses LLM to extract facts from the conversation, deduplicate, and may consolidate by ADD/UPDATE/DELETE. If false, uses simple mode: stores input as-is (no inference/dedup), faster/cheaper and more deterministic for workflows."
+      zh_Hans: "true（默认）启用智能记忆：会调用 LLM 从对话中抽取事实、去重并合并，结果可能出现 ADD/UPDATE/DELETE。false 为简单模式：不做推理/去重，直接按原文写入，更快、更省、更可预期（适合工作流）。"
+    llm_description: "true=Intelligent mode (LLM fact extraction + dedup/consolidation, event may be ADD/UPDATE/DELETE); false=Simple mode (store as-is, no inference/dedup, deterministic)."
+    form: llm
 extra:
   python:
     source: tools/add_memory.py
