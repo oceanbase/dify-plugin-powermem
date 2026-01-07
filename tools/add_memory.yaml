@@ -19,7 +19,7 @@ parameters:
     human_description:
       en_US: Memory content; accepts string or JSON list/dict (role/content).
       zh_Hans: 记忆内容；可为字符串或 JSON 列表/字典（含 role/content）。
-    llm_description: "Required. Memory input. Use either: (1) plain text string; or (2) JSON string of a single message dict {\"role\":\"user|assistant|system\",\"content\":\"...\"}; or (3) JSON string of a message list [{\"role\":\"...\",\"content\":\"...\"}, ...]. Prefer (3) for multi-turn conversations."
+    llm_description: "Required. Prefer passing plain text (recommended); the SDK will normalize it into messages automatically. Only use OpenAI-style JSON when you need multi-turn context or explicit roles: (1) JSON string of a single message dict {\"role\":\"user|assistant|system\",\"content\":\"...\"}; or (2) JSON string of a message list [{\"role\":\"...\",\"content\":\"...\"}, ...]."
     form: llm
   - name: user_id
     type: string
